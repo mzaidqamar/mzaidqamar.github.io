@@ -179,9 +179,39 @@
       transform: translateY(-2px) scale(1.035);
       transition: 0.18s cubic-bezier(.42,1.04,.55,.98);
     }
+	
   </style>
 </head>
 <body class="gradient-bg relative overflow-x-hidden">
+
+  <!-- Header Navigation -->
+  <header class="nav-blur fixed top-0 left-0 w-full z-40 border-b border-green-100 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+      <a href="#home" class="flex items-center space-x-3 text-green-900 text-xl font-extrabold tracking-wide">
+        <span class="inline-block"><i class="fas fa-leaf text-green-700 text-2xl"></i></span>
+        <span>EcoNex Consultancy</span>
+      </a>
+      <nav class="space-x-2 md:space-x-6 font-semibold text-base hidden sm:inline-block">
+        <a href="#about" class="px-2 py-1 hover:text-green-700 transition-colors" id="nav-about">About Us</a>
+        <a href="#services" class="px-2 py-1 hover:text-green-700 transition-colors" id="nav-services">Services</a>
+        <a href="#team" class="px-2 py-1 hover:text-green-700 transition-colors" id="nav-team">Team</a>
+		<a href="#whyus" class="px-2 py-1 hover:text-green-700 transition-colors" id="nav-team">Why Us</a>
+        <a href="#projects" class="px-2 py-1 hover:text-green-700 transition-colors" id="nav-projects">Projects</a>
+        <a href="#blog" class="px-2 py-1 hover:text-green-700 transition-colors" id="nav-blog">Blog</a>
+        <a href="#contact" class="px-2 py-1 hover:text-green-700 transition-colors" id="nav-contact">Contact</a>
+      </nav>
+      <button id="menuBtn" class="inline-block sm:hidden px-2 py-2 rounded bg-green-100 hover:bg-green-200 text-green-700 focus:outline-none transition"><i class="fas fa-bars"></i></button>
+    </div>
+    <!-- Mobile menu -->
+    <nav id="mobileMenu" class="hidden sm:hidden bg-white py-3 px-4 border-b border-green-100">
+      <a href="#about" class="block px-2 py-2 text-green-900 hover:text-green-800" id="mobile-nav-about">About Us</a>
+      <a href="#services" class="block px-2 py-2 text-green-900 hover:text-green-800" id="mobile-nav-services">Services</a>
+      <a href="#team" class="block px-2 py-2 text-green-900 hover:text-green-800" id="mobile-nav-team">Team</a>
+      <a href="#projects" class="block px-2 py-2 text-green-900 hover:text-green-800" id="mobile-nav-projects">Projects</a>
+      <a href="#blog" class="block px-2 py-2 text-green-900 hover:text-green-800" id="mobile-nav-blog">Blog</a>
+      <a href="#contact" class="block px-2 py-2 text-green-900 hover:text-green-800" id="mobile-nav-contact">Contact</a>
+    </nav>
+  </header>
 
 <!-- Particle Animation BG (hero) -->
 <canvas id="particles-canvas" class="particles-bg" style="z-index:5;"></canvas>
@@ -215,6 +245,35 @@
 <div class="liquid-divider" style="z-index:2;">
   <svg viewBox="0 0 1440 70"><path fill="#A8C686" fill-opacity="1" d="M0,64L34.3,58.5C68.6,53,137,43,206,41.8C274.3,41,343,51,411,53.3C480,56,549,52,617,50.2C685.7,49,754,61,823,70C891.4,79,960,85,1029,70C1097.1,54,1166,16,1234,5.7C1302.9,-5,1371,11,1406,19.2L1440,27V70H1405.7C1371.4,70,1303,70,1234,70C1165.7,70,1097,70,1029,70C960,70,891,70,823,70C754.3,70,686,70,617,70C548.6,70,480,70,411,70C342.9,70,274,70,206,70C137.1,70,69,70,34,70H0V64Z"></path></svg>
 </div>
+
+  <!-- About Us Section -->
+  <section id="about" class="relative max-w-6xl mx-auto px-4 py-14 md:py-20 flex flex-col md:flex-row items-center bg-white rounded-2xl shadow mb-10 mt-4">
+    <div class="w-full md:w-1/2 mb-8 md:mb-0 md:pr-10">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-green-800 mb-4">About EcoNex</h2>
+      <p class="text-lg text-green-900 mb-3">
+        Founded by globally recognized environmental experts, EcoNex Consultancy blends scientific rigor with creative environmental solutions for businesses, governments, and communities.
+      </p>
+      <ul class="mt-2 space-y-2 text-base text-green-800 font-medium">
+        <li><i class="fas fa-globe-asia text-green-700 mr-2"></i> India-based, international experience</li>
+        <li><i class="fas fa-flask text-green-700 mr-2"></i> Science-driven, evidence-based consultancy</li>
+        <li><i class="fas fa-leaf text-green-700 mr-2"></i> Champions of sustainable and ethical practices</li>
+      </ul>
+    </div>
+    <div class="w-full md:w-1/2 flex flex-col items-center">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=380&q=80" alt="EcoNex Nature" loading="lazy"
+        class="rounded-xl border border-green-200 shadow-lg w-full max-w-xs animate-fade-in-up">
+      <div class="mt-6 flex space-x-3">
+        <span class="inline-flex items-center px-3 py-2 text-sm bg-green-100 text-green-700 rounded-full font-semibold shadow-md uppercase tracking-wide">
+          <i class="fas fa-award mr-2"></i> Science & Impact
+        </span>
+        <span class="inline-flex items-center px-3 py-2 text-sm bg-blue-50 text-blue-700 rounded-full font-semibold shadow-md uppercase tracking-wide">
+          <i class="fas fa-users mr-2"></i> Global Insights
+        </span>
+      </div>
+    </div>
+  </section>
+  <div class="liquid"></div>
+
 
 <!-- SERVICES SECTION -->
 <section id="services" class="relative z-10 bg-green-50 py-16 px-4 sm:px-8">
