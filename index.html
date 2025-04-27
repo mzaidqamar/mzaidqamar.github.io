@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoNex Consultancy | Innovative Environmental Solutions for a Sustainable Future</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Creatively animated environmental consultancy website with interactive elements, particle effects, and immersive scrolling experiences.">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400|Quicksand:400,700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      font-family: 'Quicksand', 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(135deg, #183A2F 0%, #297C87 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* Gradient overlay animation */
+    .gradient-bg {
+      background: linear-gradient(120deg, #183A2F, #4BC7A6, #297C87, #A8C686, #D6EFC7);
+      background-size: 400% 400%;
+      animation: gradientMove 16s ease-in-out infinite;
+    }
+    @keyframes gradientMove {
+      0%, 100% {background-position: 0% 50%;}
+      33% {background-position: 100% 50%;}
+      66% {background-position: 50% 100%;}
+    }
+    /* Hero section text animation */
+    .hero-text-animate {
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+      animation: slideUpFadeIn 1.2s cubic-bezier(0.13,0.9,0.7,1.01) forwards;
+    }
+    .hero-text-animate:nth-child(1) { animation-delay: 0.2s; }
+    .hero-text-animate:nth-child(2) { animation-delay: 0.7s; }
+    .hero-text-animate:nth-child(3) { animation-delay: 1.2s; }
+    @keyframes slideUpFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    /* Section transitions (liquid/ripple) */
+    .liquid-divider {
+      position: relative;
+      width: 100%;
+      height: 70px;
+      overflow: hidden;
+      margin-top: -2px;
+      z-index:2;
+    }
+    .liquid-divider svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    /* Parallax backgrounds */
+    .parallax {
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    /* Ripple effect background */
+    .ripple-bg {
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') no-repeat center;
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Custom scrollbar for PDF compatibility (minimize scrollbars) */
+    ::-webkit-scrollbar { width: 0; background: transparent; }
+    /* Animated input underline */
+    .animated-underline:focus {
+      border-color: #297C87;
+      box-shadow: 0 1px 0 0 #297C87;
+      transition: all 0.3s;
+    }
+    /* Service card: 3D tilt effect */
+    .service-card {
+      perspective: 800px;
+      transition: box-shadow 0.2s;
+    }
+    .service-inner {
+      transition: transform 0.3s cubic-bezier(.42,1.04,.55,.98);
+      will-change: transform;
+    }
+    /* Info panel expand/collapse */
+    .info-panel {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(.43,1,.55,.97), opacity 0.4s;
+    }
+    .service-card.expanded .info-panel {
+      max-height: 150px;
+      opacity: 1;
+    }
+    /* Team Profile reveal */
+    .team-profile-img {
+      overflow: hidden;
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 8px 32px 0 rgba(39,95,92,0.22);
+      margin-bottom: 0.5em;
+    }
+    .team-profile-img img {
+      transition: filter 0.5s, transform 0.5s;
+      filter: grayscale(75%);
+      transform: scale(1.05);
+    }
+    .team-member:hover .team-profile-img img {
+      filter: grayscale(0%) saturate(120%);
+      transform: scale(1.13) rotate(1deg);
+    }
+    .team-member span.specialty {
+      font-size: 0.98em;
+      color: #297C87;
+      margin-left: 0.4em;
+      vertical-align: middle;
+    }
+    .connection-line {
+      width: 32px;
+      height: 2px;
+      background: linear-gradient(90deg, #297C87, #A8C686);
+      display: inline-block;
+      margin: 0 10px;
+      vertical-align: middle;
+      animation: pulseLine 1.8s infinite alternate;
+    }
+    @keyframes pulseLine {
+      from { filter: brightness(1);}
+      to { filter: brightness(1.5);}
+    }
+    /* Floating particles */
+    .particles-bg {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* To avoid scrollbars in PDF, limit fixed height sections */
+    .min-h-screen {
+      min-height: unset !important;
+    }
+    /* Animated icons */
+    .icon-animated {
+      animation: iconFloat 2.5s infinite alternate cubic-bezier(.42,1.04,.38,1.03);
+      display: inline-block;
+    }
+    @keyframes iconFloat {
+      0% { transform: translateY(0px) scale(1);}
+      100% { transform: translateY(-10px) scale(1.10);}
+    }
+    /* Animated map pin bounce */
+    .marker-animated {
+      animation: bounce-marker 1.4s infinite;
+    }
+    @keyframes bounce-marker {
+      0%, 100% {transform: translateY(0);}
+      60% {transform: translateY(-12px);}
+      85% {transform: translateY(-4px);}
+    }
+    /* Water ripple overlay (for backgrounds) */
+    .ripple-overlay {
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 70% 70%, rgba(41,124,135,0.17) 0%, transparent 70%), radial-gradient(circle at 30% 30%, rgba(70,185,183,0.09) 0%, transparent 70%);
+      z-index: 2;
+    }
+    /* Micro-interactions for buttons */
+    .btn-eco:hover {
+      background: linear-gradient(92deg,#297C87 60%, #A8C686 100%);
+      color:#e5f5e5;
+      box-shadow: 0 2px 20px #a8c68631;
+      transform: translateY(-2px) scale(1.035);
+      transition: 0.18s cubic-bezier(.42,1.04,.55,.98);
+    }
+  </style>
+</head>
+<body class="gradient-bg relative overflow-x-hidden">
+
+<!-- Particle Animation BG (hero) -->
+<canvas id="particles-canvas" class="particles-bg" style="z-index:5;"></canvas>
+
+<!-- HERO SECTION -->
+<section id="hero" class="relative overflow-hidden pt-20 pb-32 md:pt-32 md:pb-44 select-none">
+  <div class="absolute inset-0 ripple-overlay"></div>
+  <div class="container mx-auto px-6 z-10 relative">
+    <div class="flex flex-col items-center justify-center text-center">
+      <h1 class="text-4xl sm:text-6xl font-bold hero-text-animate text-green-50 drop-shadow-lg tracking-wide"
+        style="font-family:'Montserrat',sans-serif;letter-spacing:1.5px">
+        EcoNex Consultancy Pvt. Ltd.
+      </h1>
+      <h2 class="mt-6 text-2xl sm:text-3xl max-w-2xl hero-text-animate text-green-100 font-semibold"
+        style="font-family:'Quicksand',sans-serif;">
+        Innovative Environmental Solutions for a Sustainable Future in India
+      </h2>
+      <p class="mt-6 text-lg max-w-xl mx-auto text-green-200 hero-text-animate">
+        Science-led consultancy specializing in Environmental Engineering, Water Resource Management, and Sustainable Development. Let's build greener tomorrow, together.
+      </p>
+      <a href="#contact" class="mt-10 inline-block px-7 py-3 btn-eco bg-green-700 text-white rounded-full font-bold shadow-md transition-all ring-2 ring-green-100 hover:ring-green-300 hover:bg-green-600 hover:text-green-50">
+        Contact Us
+      </a>
+    </div>
+  </div>
+  <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-bounce text-green-100" style="font-size:2rem;">
+    <i class="fas fa-angle-double-down"></i>
+  </div>
+</section>
+
+<div class="liquid-divider" style="z-index:2;">
+  <svg viewBox="0 0 1440 70"><path fill="#A8C686" fill-opacity="1" d="M0,64L34.3,58.5C68.6,53,137,43,206,41.8C274.3,41,343,51,411,53.3C480,56,549,52,617,50.2C685.7,49,754,61,823,70C891.4,79,960,85,1029,70C1097.1,54,1166,16,1234,5.7C1302.9,-5,1371,11,1406,19.2L1440,27V70H1405.7C1371.4,70,1303,70,1234,70C1165.7,70,1097,70,1029,70C960,70,891,70,823,70C754.3,70,686,70,617,70C548.6,70,480,70,411,70C342.9,70,274,70,206,70C137.1,70,69,70,34,70H0V64Z"></path></svg>
+</div>
+
+<!-- SERVICES SECTION -->
+<section id="services" class="relative z-10 bg-green-50 py-16 px-4 sm:px-8">
+  <div class="max-w-5xl mx-auto">
+    <h3 class="text-3xl md:text-4xl font-bold text-center mb-5 text-green-900">Our Services</h3>
+    <p class="text-center text-green-700 max-w-2xl mx-auto mb-12 font-medium">
+      Empowering organizations and communities with science-backed environmental and sustainable solutions.
+    </p>
+    <div id="services-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 group">
+      <!-- Service cards will be populated by JS for 3D tilt/interactivity -->
+    </div>
+  </div>
+</section>
+
+<div class="liquid-divider" style="z-index:2;">
+  <svg viewBox="0 0 1440 70"><path fill="#297C87" fill-opacity="1" d="M0,27L34.3,24.8C68.6,23,137,17,206,27.3C274.3,38,343,66,411,67.7C480,70,549,45,617,35.8C685.7,27,754,42,823,41.3C891.4,40,960,24,1029,16.3C1097.1,9,1166,11,1234,22.2C1302.9,34,1371,56,1406,67.5L1440,79V0H1405.7C1371.4,0,1303,0,1234,0C1165.7,0,1097,0,1029,0C960,0,891,0,823,0C754.3,0,686,0,617,0C548.6,0,480,0,411,0C342.9,0,274,0,206,0C137.1,0,69,0,34,0H0V27Z"></path></svg>
+</div>
+
+<!-- TEAM SECTION -->
+<section id="team" class="relative parallax py-16 px-4 sm:px-8" style="background: linear-gradient(108deg, #297C87 60%, #A8C686 100%);">
+  <div class="max-w-4xl mx-auto z-20 relative">
+    <h3 class="text-3xl md:text-4xl font-bold text-center mb-6 text-green-50">Our Founders</h3>
+    <div class="flex flex-col md:flex-row items-center md:justify-center gap-14">
+      <!-- Team Member 1 -->
+      <div class="team-member flex flex-col items-center bg-white bg-opacity-70 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 group" style="min-width:220px;width:100%;max-width:350px;">
+        <div class="team-profile-img w-36 h-36 border-4 border-green-400 mb-4 group-hover:scale-105 transition">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Mohammad Obaid Qamar" class="object-cover w-full h-full">
+        </div>
+        <div class="text-center">
+          <div class="font-bold text-lg text-green-800 mb-2">Dr. Mohammad Obaid Qamar</div>
+          <div class="text-green-600 font-semibold">
+            PhD - Water Resources & Environmental Engineering<br>
+            <span class="specialty"><i class="fas fa-water icon-animated"></i> Yeungnam Univ., South Korea</span>
+          </div>
+          <div class="mt-3 text-green-700 text-sm opacity-90">
+            Specializes in advanced water resources management and environmental engineering solutions within the Indian context.
+          </div>
+        </div>
+      </div>
+      <span class="connection-line hidden md:inline-block"></span>
+      <!-- Team Member 2 -->
+      <div class="team-member flex flex-col items-center bg-white bg-opacity-70 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 group" style="min-width:220px;width:100%;max-width:350px;">
+        <div class="team-profile-img w-36 h-36 border-4 border-blue-400 mb-4 group-hover:scale-105 transition">
+          <img src="https://randomuser.me/api/portraits/men/43.jpg" alt="Dr. Muhammad Zaid Qamar" class="object-cover w-full h-full">
+        </div>
+        <div class="text-center">
+          <div class="font-bold text-lg text-green-800 mb-2">Dr. Muhammad Zaid Qamar</div>
+          <div class="text-green-600 font-semibold">
+            PhD - Env. Resources & Sustainable Dev.<br>
+            <span class="specialty"><i class="fas fa-leaf icon-animated"></i> Naples Parthenope, Italy</span>
+          </div>
+          <div class="mt-3 text-green-700 text-sm opacity-90">
+            Expert in sustainable development strategy, climate resilience, and environmental impact policy for diverse stakeholders.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Environmental animated illustration inline SVG -->
+  <div class="absolute bottom-0 left-0 w-2/3 opacity-20 pointer-events-none" style="z-index:1;">
+    <svg viewBox="0 0 320 60"><ellipse cx="160" cy="55" rx="150" ry="20" fill="#fff" fill-opacity="0.50" /><ellipse cx="200" cy="40" rx="80" ry="12" fill="#297C87" fill-opacity="0.15"/><ellipse cx="60" cy="55" rx="25" ry="6" fill="#a8c686" fill-opacity="0.15"/></svg>
+  </div>
+</section>
+
+<div class="liquid-divider" style="z-index:2;">
+  <svg viewBox="0 0 1440 70"><path fill="#A8C686" fill-opacity="1" d="M0,64L40,60C80,56,160,48,240,48C320,48,400,56,480,60C560,64,640,64,720,60C800,56,880,48,960,40C1040,32,1120,24,1200,28C1280,32,1360,48,1400,56L1440,64V70H1400C1360,70,1280,70,1200,70C1120,70,1040,70,960,70C880,70,800,70,720,70C640,70,560,70,480,70C400,70,320,70,240,70C160,70,80,70,40,70H0V64Z"></path></svg>
+</div>
+
+<!-- APPROACH and WHY US SECTION -->
+<section id="whyus" class="relative bg-green-50 px-3 py-16 sm:px-8">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    <div class="md:w-1/2">
+      <h3 class="text-3xl md:text-4xl font-bold mb-5 text-green-900">Why Choose EcoNex?</h3>
+      <ul class="list-none space-y-4">
+        <li class="flex items-start"><span class="icon-animated text-green-700 text-lg mr-3"><i class="fas fa-user-graduate"></i></span> Founders with world-class PhDs in environmental disciplines</li>
+        <li class="flex items-start"><span class="icon-animated text-green-700 text-lg mr-3"><i class="fas fa-seedling"></i></span> Integrated science-based and sustainable practice</li>
+        <li class="flex items-start"><span class="icon-animated text-green-700 text-lg mr-3"><i class="fas fa-sitemap"></i></span> Multi-disciplinary solutions for water, waste, and climate</li>
+        <li class="flex items-start"><span class="icon-animated text-green-700 text-lg mr-3"><i class="fas fa-globe-asia"></i></span> Global expertise, local insight within India</li>
+        <li class="flex items-start"><span class="icon-animated text-green-700 text-lg mr-3"><i class="fas fa-shield-alt"></i></span> Commitment to ethics, compliance, and client success</li>
+      </ul>
+    </div>
+    <div class="relative md:w-1/2">
+      <!-- Eco animated illustration -->
+      <svg class="mx-auto w-80 h-72" viewBox="0 0 350 250">
+        <g>
+          <ellipse cx="90" cy="220" rx="75" ry="18" fill="#297C87" opacity=".22"/>
+          <ellipse cx="220" cy="230" rx="70" ry="12" fill="#97c67b" opacity=".13"/>
+          <circle cx="100" cy="140" r="42" fill="#A8C686" opacity="0.4"/>
+          <circle cx="120" cy="110" r="38" fill="#297C87" opacity="0.18"/>
+          <circle cx="200" cy="180" r="35" fill="#183A2F" opacity="0.13"/>
+          <rect x="180" y="150" width="50" height="100" rx="22" fill="#92e3a9" opacity="0.16" transform="rotate(18 210 200)"/>
+        </g>
+        <g>
+          <path d="M120,195 Q145,145 195,170 Q205,173 205,190" stroke="#4BC7A6" stroke-width="5" fill="none" opacity="0.7"/>
+          <circle cx="120" cy="195" r="9" fill="#4BC7A6" opacity="0.8"/>
+          <circle cx="205" cy="190" r="11" fill="#297C87" opacity="0.6"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Animated ripples Background section -->
+<section id="impact" class="relative ripple-bg py-20 px-4 sm:px-8">
+  <div class="absolute inset-0 ripple-overlay z-10"></div>
+  <div class="max-w-4xl mx-auto text-center text-green-50 relative z-20">
+    <h3 class="text-3xl md:text-4xl font-bold mb-5">Driving Real Sustainability Impact</h3>
+    <p class="mb-8 text-lg font-medium opacity-95">Our holistic, research-driven approach empowers organizations to achieve compliance, foster innovation, and champion environmental stewardship for generations ahead.</p>
+    <div class="flex flex-wrap justify-center gap-10">
+      <div class="bg-green-700 bg-opacity-70 px-8 py-5 rounded-2xl shadow-md flex items-center gap-3">
+        <i class="fas fa-leaf fa-lg text-green-100 animate-spin-slow"></i>
+        <span class="font-bold text-lg">Ecological Sustainability</span>
+      </div>
+      <div class="bg-green-900 bg-opacity-60 px-8 py-5 rounded-2xl shadow-md flex items-center gap-3">
+        <i class="fas fa-tint fa-lg text-green-100 pulse"></i>
+        <span class="font-bold text-lg">Clean Water Resources</span>
+      </div>
+      <div class="bg-green-600 bg-opacity-80 px-8 py-5 rounded-2xl shadow-md flex items-center gap-3">
+        <i class="fas fa-recycle fa-lg text-green-100"></i>
+        <span class="font-bold text-lg">Circular Economy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="relative bg-green-50 py-16 px-4 sm:px-8">
+  <div class="max-w-3xl mx-auto">
+    <h3 class="text-3xl md:text-4xl font-bold mb-8 text-green-900 text-center">Contact Us</h3>
+    <div class="flex flex-col md:flex-row gap-8">
+      <form class="md:w-2/3 bg-white rounded-2xl shadow-xl p-8 z-20">
+        <div class="mb-5">
+          <label class="block mb-2 text-green-800 font-semibold" for="name">Name</label>
+          <input class="w-full px-4 py-3 border-b-2 border-green-300 bg-transparent focus:outline-none text-green-900 text-sm transition animated-underline" type="text" id="name" name="name" placeholder="Enter your name">
+        </div>
+        <div class="mb-5">
+          <label class="block mb-2 text-green-800 font-semibold" for="email">Email</label>
+          <input class="w-full px-4 py-3 border-b-2 border-green-300 bg-transparent focus:outline-none text-green-900 text-sm transition animated-underline" type="email" id="email" name="email" placeholder="Enter your email">
+        </div>
+        <div class="mb-5">
+          <label class="block mb-2 text-green-800 font-semibold" for="msg">Message</label>
+          <textarea class="w-full px-4 py-3 border-b-2 border-green-300 bg-transparent focus:outline-none text-green-900 text-sm transition animated-underline" id="msg" name="msg" rows="4" placeholder="How can we help?"></textarea>
+        </div>
+        <div>
+          <button type="submit" class="relative mt-1 px-7 py-3 btn-eco bg-green-700 text-white rounded-full font-bold transition-all ring-2 ring-green-300 hover:scale-105 hover:ring-green-500 hover:bg-green-600 hover:shadow-lg focus:outline-none active:scale-95" style="overflow:hidden;">
+            <span class="mr-2"><i class="fas fa-paper-plane"></i></span>
+            Send Message
+          </button>
+        </div>
+      </form>
+      <!-- Animated map illustration -->
+      <div class="flex-1 flex items-center justify-center">
+        <div class="relative">
+          <svg width="240" height="240" viewBox="0 0 280 250">
+            <ellipse cx="140" cy="190" rx="110" ry="35" fill="#297C87" opacity="0.17"/>
+            <path d="M54,170 Q80,100 138,142 Q197,185 225,100" stroke="#A8C686" fill="none" stroke-width="3" opacity="0.7"/>
+            <circle cx="95" cy="140" r="16" fill="#D6EFC7" stroke="#A8C686" stroke-width="2"/>
+            <circle cx="180" cy="120" r="11" fill="#297C87" stroke="#183A2F" stroke-width="2"/>
+            <!-- animated marker -->
+            <g class="marker-animated"><circle cx="175" cy="110" r="13" fill="#92e3a9" stroke="#183A2F" stroke-width="3"/></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 text-center text-green-800">
+      <span><i class="fas fa-phone-alt"></i> +91-XXXXXXXXXX &nbsp; </span>
+      <span><i class="fas fa-envelope"></i> info@econex.in</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="mt-12 pb-8 pt-8 bg-gradient-to-r from-green-800 via-green-700 to-green-900 text-green-100 relative z-20 shadow-inner">
+  <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6 px-4">
+    <div>
+      <span class="font-bold tracking-wide text-lg">EcoNex Consultancy Pvt. Ltd.</span> © <span id="year"></span>
+    </div>
+    <div class="flex space-x-8">
+      <a href="#hero" class="hover:underline">Home</a>
+      <a href="#services" class="hover:underline">Services</a>
+      <a href="#team" class="hover:underline">Team</a>
+      <a href="#contact" class="hover:underline">Contact</a>
+    </div>
+    <div class="flex space-x-3 text-xl">
+      <a href="#" class="hover:text-green-300"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="hover:text-green-300"><i class="fab fa-linkedin"></i></a>
+      <a href="#" class="hover:text-green-300"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js"></script>
+<script>
+  // Update year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // 1. Particle/waves Animation for Hero Section
+  let canvas = document.getElementById('particles-canvas');
+  let ctx = canvas.getContext('2d');
+  let particles = [];
+  let W = window.innerWidth, H = window.innerHeight;
+  // Utility colors between blue & green shades
+  let shades = ["#4bc7a6","#297c87","#a8c686","#197c87","#88e8d8"];
+  function random(min,max){return Math.random()*(max-min)+min;}
+  function resizeCanvas(){
+      W = window.innerWidth;
+      H = Math.max(440, window.innerHeight * 0.7);
+      canvas.width = W; canvas.height = H;
+  }
+  resizeCanvas();
+  window.addEventListener('resize',resizeCanvas);
+  // Particle class
+  function Particle(){
+    this.x = random(0, W);
+    this.y = random(H*0.15, H*0.9);
+    this.r = random(9,17);
+    this.dx = random(-0.11,0.12);
+    this.dy = random(-0.07,0.10);
+    this.baseY = this.y;
+    this.float = random(0,1);
+    this.color = shades[Math.floor(random(0,shades.length))];
+  }
+  for (let i=0; i<36; i++) particles.push(new Particle());
+  let mouse = {x: W/2, y: H/2};
+  document.addEventListener('mousemove', e=>{
+    mouse.x = e.clientX; mouse.y = e.clientY;
+  });
+  function animateParticles(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach((p,i)=>{
+      let d = Math.sqrt((mouse.x-p.x)**2 + (mouse.y-p.y)**2);
+      let m = Math.max(0.09,180/(d+25));
+      p.x += p.dx*m*0.1;
+      p.y += p.dy*m*0.08 + Math.sin(Date.now()*0.001+p.float+i)*0.5;
+      // repel from mouse
+      if (d<94) {
+         p.x += (p.x-mouse.x)/(d+8)*3.2;
+         p.y += (p.y-mouse.y)/(d+8)*2.8;
+      }
+      if(p.x > W+30) p.x = -20;
+      if(p.x < -30) p.x = W+20;
+      if(p.y > H+25) p.y = random(0,H/2);
+      if(p.y < 0) p.y = H - random(0,H/2);
+      // Draw
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+      ctx.fillStyle=p.color;
+      ctx.globalAlpha=0.18+0.18*Math.sin(Date.now()*0.002+p.x);
+      ctx.shadowColor=p.color;
+      ctx.shadowBlur=10;
+      ctx.fill();
+      ctx.globalAlpha=1.0;
+      ctx.shadowBlur=0;
+      // Add leaf/water shape? (just a simple ellipse)
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(((i%2===0)?1:-1)*Date.now()*0.00038);
+      ctx.beginPath();
+      ctx.ellipse(0,0,p.r*0.85,p.r*0.45,0,0,2*Math.PI);
+      ctx.fillStyle=shades[i%shades.length];
+      ctx.globalAlpha=0.14;
+      ctx.fill();
+      ctx.globalAlpha=1.0;
+      ctx.restore();
+    });
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  // 2. Fade-in and Parallax on Scroll using Intersection Observer
+  function addFadeInObserver() {
+    const faders = document.querySelectorAll('section, .service-card, .team-member, .whyus .ul li');
+    let observer = new IntersectionObserver((entries,obs)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('opacity-100','translate-y-0','scale-100');
+          entry.target.classList.remove('opacity-0','translate-y-7','scale-95');
+        }
+      });
+    },{threshold: .18});
+    faders.forEach(el=>{
+      el.classList.add('opacity-0','translate-y-7','scale-95','transition-all','duration-1000');
+      observer.observe(el);
+    });
+  }
+  window.addEventListener('DOMContentLoaded',addFadeInObserver);
+
+  // 3. Service cards - interactive, 3D tilt, expandable
+  const services = [
+    {
+      title:"Environmental Impact Assessment",
+      icon:"fa-clipboard-list",
+      color:"#297c87",
+      desc:"Comprehensive EIA services for projects, ensuring regulatory compliance, risk assessment, and minimization of ecological footprint."
+    },
+    {
+      title:"Water Resources Management",
+      icon:"fa-water",
+      color:"#4bc7a6",
+      desc:"Innovative solutions for water conservation, quality assessment, infrastructure planning, and resource optimization."
+    },
+    {
+      title:"Sustainable Development Planning",
+      icon:"fa-seedling",
+      color:"#a8c686",
+      desc:"Strategic planning integrating environmental, economic, and social sustainability for long-term growth."
+    },
+    {
+      title:"Environmental Compliance & Regulatory Support",
+      icon:"fa-balance-scale",
+      color:"#4bc7a6",
+      desc:"Expert guidance through India's environmental laws, standards, and permitting for streamlined operations."
+    },
+    {
+      title:"Waste Management Solutions",
+      icon:"fa-recycle",
+      color:"#297c87",
+      desc:"Customized solid and liquid waste management systems, emphasizing circular economy and pollution prevention."
+    },
+    {
+      title:"Climate Change Adaptation & Mitigation",
+      icon:"fa-cloud-sun-rain",
+      color:"#a8c686",
+      desc:"Strategies for climate resilience, carbon footprint reduction, and adaptation to environmental variability."
+    },
+    {
+      title:"Green Building Certification",
+      icon:"fa-building",
+      color:"#3cc298",
+      desc:"Consultancy for eco-friendly construction, facilitating pre-certification, audits, and sustainable design."
+    }
+  ];
+  function createServiceCards() {
+    const container = document.getElementById('services-cards');
+    services.forEach((service, i)=>{
+      let card = document.createElement('div');
+      card.className = "service-card bg-white rounded-2xl shadow-xl p-7 flex flex-col items-center group cursor-pointer transition-all duration-500 relative hover:ring-2 hover:ring-green-400 focus:ring-green-700";
+      card.setAttribute('tabindex','0');
+      card.innerHTML = `
+      <div class="w-16 h-16 rounded-full flex justify-center items-center mb-5" style="background: radial-gradient(ellipse at 55% 58%, ${service.color}26 80%, #fff 100%);">
+        <i class="fas ${service.icon} fa-2x icon-animated" style="color:${service.color}"></i>
+      </div>
+      <h4 class="text-lg font-bold mb-2 text-green-800 group-hover:text-green-900 transition">${service.title}</h4>
+      <button class="expand-btn transition text-green-600 hover:text-green-800 absolute bottom-5 right-5 bg-green-50 px-3 py-1 rounded-full shadow" aria-label="Show details"><i class="fas fa-chevron-down"></i></button>
+      <div class="info-panel mt-2 text-green-700 text-sm font-semibold">${service.desc}</div>
+      `;
+      // 3D tilt effect
+      card.addEventListener('mousemove', e=>{
+        const {left,top,width,height} = card.getBoundingClientRect();
+        let x = (e.clientX - left - width/2)/width, y = (e.clientY - top - height/2)/height;
+        card.querySelector('.service-inner')?.style && (card.querySelector('.service-inner').style.transform = `rotateY(${x*12}deg) rotateX(${-y*10}deg)`);
+        card.style.boxShadow = `0 8px 36px 4px rgba(41,124,135,${0.08+0.08*Math.abs(x)})`;
+      });
+      card.addEventListener('mouseleave',()=>{
+        card.querySelector('.service-inner')?.style && (card.querySelector('.service-inner').style.transform = "none");
+        card.style.boxShadow = "";
+      });
+      // Expand info
+      card.querySelector('.expand-btn').onclick = e=>{
+        card.classList.toggle('expanded');
+        e.preventDefault(); e.stopPropagation();
+        card.querySelector('.expand-btn i').classList.toggle('fa-chevron-up');
+        card.querySelector('.expand-btn i').classList.toggle('fa-chevron-down');
+      };
+      // For PDF, keep expanded by default
+      if (window.matchMedia && window.matchMedia('print').matches) card.classList.add('expanded');
+      container.appendChild(card);
+    });
+    // 3D tilt via JS—to make more visually, wrap the core content in .service-inner for tilt
+    container.querySelectorAll('.service-card').forEach(card=>{
+      let content = card.innerHTML;
+      card.innerHTML = `<div class="service-inner">${content}</div>`;
+    });
+  }
+  window.addEventListener('DOMContentLoaded',createServiceCards);
+
+  // 4. Micro-interactions and playful touch
+  document.querySelectorAll('input, textarea').forEach(el=>{
+    el.addEventListener('focus',()=>{el.classList.add('ring-2','ring-green-400');});
+    el.addEventListener('blur',()=>{el.classList.remove('ring-2','ring-green-400');});
+  });
+  const form = document.querySelector('form');
+  form && form.addEventListener('submit',e=>{
+    e.preventDefault();
+    let btn = form.querySelector('button[type=submit]');
+    btn.innerHTML = '<i class="fas fa-check-circle animate-pulse"></i> Sent!';
+    setTimeout(()=>{btn.innerHTML='<span class="mr-2"><i class="fas fa-paper-plane"></i></span>Send Message';},2200);
+  });
+
+  // 5. Adjust ripple backgrounds and parallax for visual dynamics
+  window.addEventListener('scroll',function(){
+    // Animate the background gradient shift (parallax effect)
+    let scrollY = window.scrollY;
+    document.body.style.backgroundPosition = `0 ${(scrollY*0.17)%180}px`;
+    // Hide hero arrow if scrolled
+    let arrow = document.querySelector('#hero .animate-bounce');
+    if(arrow){
+      arrow.style.opacity = scrollY<100?1:0;
+      arrow.style.pointerEvents = scrollY<55?"auto":"none";
+    }
+  }, {passive:true});
+
+</script>
+</body>
+</html>
